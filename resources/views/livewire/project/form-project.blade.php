@@ -1,5 +1,4 @@
 <div class="p-4">
-    {{-- TODO: Crear proyecto --}}
     {{-- TODO: Editar proyecto --}}
     {{-- TODO: Eliminar proyecto --}}
     <form wire:submit.prevent="createProject">

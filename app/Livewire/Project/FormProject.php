@@ -33,7 +33,7 @@ class FormProject extends Component
     public function updatedImage()
     {
         $this->validate([
-            'image' => 'image|max:2048', // Max size 2MB
+            'image' => 'image|max:2048',
         ]);
 
         $this->imagePreview = $this->image->temporaryUrl();

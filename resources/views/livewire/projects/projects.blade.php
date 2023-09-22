@@ -9,5 +9,6 @@
     </button>
 
     {{-- TODO: Tabla de proyectos --}}
+    <livewire:projects.projects-table />
     {{-- TODO: Editar proyecto --}}
 </div>
