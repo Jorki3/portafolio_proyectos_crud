@@ -2,10 +2,14 @@
 
 namespace App\Livewire\Project;
 
+use App\Mail\EmailProject;
 use App\Models\Project;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Mail;
 
 class FormProject extends Component
 {
@@ -57,12 +61,15 @@ class FormProject extends Component
             $this->image->storeAs('images', $imageName, 'public');
         }
 
-        Project::create([
+        $project = Project::create([
             'title' => $this->title,
             'description' => $this->description,
             'image' => $imageName,
             'isPublic' => $this->isPublic,
         ]);
+
+        Mail::to(Auth::user()->email)->send(new EmailProject($project));
+        // Mail::to(Auth::user()->email)->later(now()->addMinutes(2), new EmailProject($project));
 
         $this->redirect('/dashboard');
     }
