@@ -12,7 +12,7 @@
         </p>
     </div>
 
-    <div class="w-full p-4 md:flex md:space-x-4">
+    <div class="w-full p-4 grid grid-cols-3 gap-4">
         @foreach ($projects as $project)
             <div class="w-full mb-4">
                 <livewire:project.project-card :$project :key="$project->id" />

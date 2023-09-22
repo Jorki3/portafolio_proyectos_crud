@@ -12,7 +12,7 @@ class PublicProjects extends Component
 
     public function read()
     {
-        return Project::where('isPublic', 1)->paginate(4);
+        return Project::where('isPublic', 1)->paginate(6);
     }
 
     public function render()
