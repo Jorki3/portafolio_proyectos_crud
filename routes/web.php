@@ -23,6 +23,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     })->name('dashboard');
 
     Route::get('/create-project', function () {
-        return view('form-project');
+        return view('form-project', [
+            'id' => null
+        ]);
     })->name('create-project');
+
+    Route::get('/edit-project/{id}', function ($id) {
+        return view('form-project', [
+            'id' => $id
+        ]);
+    })->name('edit-project');
 });

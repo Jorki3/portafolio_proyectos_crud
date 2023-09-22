@@ -7,6 +7,11 @@ use Livewire\Component;
 
 class ProjectsTable extends Component
 {
+    public function editForm($id)
+    {
+        $this->redirect('/edit-project/' . $id);
+    }
+
     public function read()
     {
         return Project::all();
