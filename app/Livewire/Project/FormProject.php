@@ -20,6 +20,12 @@ class FormProject extends Component
     public $isPublic = 1;
     public $image;
 
+    public function deleteProject()
+    {
+        Project::find($this->project->id)->delete();
+        return $this->redirect('/dashboard');
+    }
+
     public function updateProject()
     {
         $imageName = null;

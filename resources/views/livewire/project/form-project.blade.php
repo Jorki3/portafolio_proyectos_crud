@@ -1,5 +1,4 @@
 <div class="p-4">
-    {{-- TODO: Eliminar proyecto --}}
     @if (!$isEditing)
         <form wire:submit.prevent="createProject">
         @else
@@ -38,17 +37,26 @@
                     placeholder="Escribe la descripción de tu proyecto"></textarea>
             </div>
 
-            <div class="mb-4">
-                <label for="title" class="block text-gray-700 dark:text-white font-bold mb-2">Publico o
-                    Borrador</label>
-                <select id="isPublic" wire:model="isPublic" class="w-full rounded-lg dark:text-white dark:bg-gray-800">
-                    <option value="1">Publico</option>
-                    <option value="0">Borrador</option>
-                </select>
+            <div class="mb-4 {{ $isEditing ? 'flex space-x-4' : '' }}">
+                <div class="{{ $isEditing ? 'w-1/2' : '' }}">
+                    <label for="title" class="block text-gray-700 dark:text-white font-bold mb-2">Publico o
+                        Borrador</label>
+                    <select id="isPublic" wire:model="isPublic"
+                        class="w-full rounded-lg dark:text-white dark:bg-gray-800">
+                        <option value="1">Publico</option>
+                        <option value="0">Borrador</option>
+                    </select>
+                </div>
+
+                @if ($isEditing)
+                    <button type="button" wire:click='deleteProject'
+                        class="p-2 md:p-2 w-full bg-red-600 hover:bg-red-500 text-white rounded-xl">Eliminar
+                        proyecto</button>
+                @endif
             </div>
 
-            <button type="submit" class="p-4 md:p-2 w-full bg-green-600 hover:bg-green-500 text-white rounded-xl">Subir
-                imagen</button>
+            <button type="submit"
+                class="p-4 md:p-2 w-full bg-green-600 hover:bg-green-500 text-white rounded-xl">Guardar</button>
         </div>
     </div>
     </form>
