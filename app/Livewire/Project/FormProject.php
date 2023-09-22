@@ -31,8 +31,7 @@ class FormProject extends Component
     {
         $project = Project::firstWhere('id', $this->project->id);
 
-        Mail::to(Auth::user()->email)->send(new DeleteProject($project));
-
+        Mail::to(Auth::user()->email)->later(now()->addMinutes(10), new DeleteProject($project));
         $project->delete();
         return $this->redirect('/dashboard');
     }
@@ -58,8 +57,7 @@ class FormProject extends Component
         $project->image = $imageName;
         $project->save();
 
-        Mail::to(Auth::user()->email)->send(new EditProject($project));
-
+        Mail::to(Auth::user()->email)->later(now()->addMinutes(10), new EditProject($project));
         return $this->redirect('/dashboard');
     }
 
@@ -77,9 +75,7 @@ class FormProject extends Component
             'isPublic' => $this->isPublic,
         ]);
 
-        Mail::to(Auth::user()->email)->send(new CreateProject($project));
-        Mail::to(Auth::user()->email)->later(now()->addMinutes(2), new CreateProject($project));
-
+        Mail::to(Auth::user()->email)->later(now()->addMinutes(10), new CreateProject($project));
         $this->redirect('/dashboard');
     }
 
