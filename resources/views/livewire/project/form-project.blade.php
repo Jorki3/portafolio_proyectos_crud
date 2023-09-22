@@ -31,6 +31,16 @@
                         placeholder="Escribe la descripción de tu proyecto"></textarea>
                 </div>
 
+                <div class="mb-4">
+                    <label for="title" class="block text-gray-700 dark:text-white font-bold mb-2">Publico o
+                        Borrador</label>
+                    <select id="isPublic" wire:model="isPublic"
+                        class="w-full rounded-lg dark:text-white dark:bg-gray-800">
+                        <option value="1">Publico</option>
+                        <option value="0">Borrador</option>
+                    </select>
+                </div>
+
                 <button type="submit"
                     class="p-4 md:p-2 w-full bg-green-600 hover:bg-green-500 text-white rounded-xl">Subir
                     imagen</button>
