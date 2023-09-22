@@ -3,6 +3,9 @@
 namespace App\Livewire\Project;
 
 use App\Mail\EmailProject;
+use App\Mail\Projects\CreateProject;
+use App\Mail\Projects\DeleteProject;
+use App\Mail\Projects\EditProject;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -26,14 +29,18 @@ class FormProject extends Component
 
     public function deleteProject()
     {
-        Project::find($this->project->id)->delete();
+        $project = Project::firstWhere('id', $this->project->id);
+
+        Mail::to(Auth::user()->email)->send(new DeleteProject($project));
+
+        $project->delete();
         return $this->redirect('/dashboard');
     }
 
     public function updateProject()
     {
         $imageName = null;
-        $projectId = $this->project->id;
+        $oldProject = $this->project;
 
         if ($this->image != null) {
             $imageName = $this->generateUniqueFileName();
@@ -41,15 +48,17 @@ class FormProject extends Component
         }
 
         if ($imageName == null) {
-            $imageName = $this->project->image;
+            $imageName = $oldProject->image;
         }
 
-        Project::firstWhere('id', $projectId)->update([
-            'title' => $this->title,
-            'description' => $this->description,
-            'isPublic' => $this->isPublic,
-            'image' => $imageName,
-        ]);
+        $project = Project::find($oldProject->id);
+        $project->title = $this->title;
+        $project->description = $this->description;
+        $project->isPublic = $this->isPublic;
+        $project->image = $imageName;
+        $project->save();
+
+        Mail::to(Auth::user()->email)->send(new EditProject($project));
 
         return $this->redirect('/dashboard');
     }
@@ -68,8 +77,8 @@ class FormProject extends Component
             'isPublic' => $this->isPublic,
         ]);
 
-        Mail::to(Auth::user()->email)->send(new EmailProject($project));
-        // Mail::to(Auth::user()->email)->later(now()->addMinutes(2), new EmailProject($project));
+        Mail::to(Auth::user()->email)->send(new CreateProject($project));
+        Mail::to(Auth::user()->email)->later(now()->addMinutes(2), new CreateProject($project));
 
         $this->redirect('/dashboard');
     }

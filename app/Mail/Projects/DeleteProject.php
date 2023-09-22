@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Projects;
 
-use App\Models\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Mail\Mailables\Attachment;
 
-class EmailProject extends Mailable
+class DeleteProject extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -21,6 +19,7 @@ class EmailProject extends Mailable
      */
     public function __construct(public $project)
     {
+        //
     }
 
     /**
@@ -29,8 +28,8 @@ class EmailProject extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('test@portafolio.com', 'David Mtz'),
-            subject: 'Mail de prueba',
+            from: new Address('news@portafolio.com', 'Portafolio Sys'),
+            subject: 'Eliminaste un proyecto en tu protafolio',
         );
     }
 
@@ -40,7 +39,8 @@ class EmailProject extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.projects.create',
+            view: 'emails.projects.mail',
+            with: ['h1' => 'Haz eliminado un proyecto'],
         );
     }
 
@@ -51,8 +51,6 @@ class EmailProject extends Mailable
      */
     public function attachments(): array
     {
-        return [
-            // Attachment::fromStorage('images/' . $this->project->image),
-        ];
+        return [];
     }
 }

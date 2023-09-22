@@ -1,5 +1,5 @@
 <div style="text-align: center">
-    <h1>Creaste un nuevo proyecto</h1>
+    <h1>{{ $h1 }}</h1>
 
     <h2>Proyecto: {{ $project->title }}</h2>
 
